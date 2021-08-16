@@ -1,9 +1,9 @@
 # RandomUser
 
 <div style="display: flex; column-gap: 10px">
-  <img src="src/assets/images/cover1.png" alt="drawing" width="320"/>
-  <img src="src/assets/images/cover2.png" alt="drawing" width="320"/>
-  <img src="src/assets/images/cover3.png" alt="drawing" width="320"/>
+  <img src="src/assets/images/cover1.png" alt="drawing" width="280"/>
+  <img src="src/assets/images/cover2.png" alt="drawing" width="280"/>
+  <img src="src/assets/images/cover3.png" alt="drawing" width="280"/>
 </div>
 
 ## Tecnologias
