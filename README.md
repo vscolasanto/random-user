@@ -1,27 +1,31 @@
 # RandomUser
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
+<div style="display: flex; column-gap: 10px">
+  <img src="src/assets/images/cover1.png" alt="drawing" width="320"/>
+  <img src="src/assets/images/cover2.png" alt="drawing" width="320"/>
+  <img src="src/assets/images/cover3.png" alt="drawing" width="320"/>
+</div>
 
-## Development server
+## Tecnologias
+Projeto criado para estudo da linguagem angular.
+  - [x] Angular
+  - [x] Typescript
+  - [x] Consumo API
+  - [x] Mapa Leaflet 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### Para rodar o projeto:
 
-## Code scaffolding
+```shell
+git clone https://github.com/vscolasanto/random-user.git
+```
+```shell
+cd random-user
+```
+```shell
+npm install
+```
+```shell
+ng s
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Após o clone e instalação das dependências, execute o projeto com `ng s`. O projeto será disponibilizado no endereço `http://localhost:4200`.
