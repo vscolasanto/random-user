@@ -1,0 +1,8 @@
+<div class="user-card">
+  <app-avatar
+    [pictures]="user.picture"
+    [avatarAlt]="user.name.first + ' ' + user.name.last"
+    avatarSize="thumb"
+  ></app-avatar>
+  <span>{{user.name.first}}</span>
+</div>
