@@ -1,0 +1,76 @@
+.user-detail {
+  align-items: center;
+  display:flex;
+
+  app-avatar {
+    margin-right: 1rem;
+  }
+
+  .user-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    h3 {
+      align-items: center;
+      display: flex;
+      font-weight: 500;
+      justify-content: space-between;
+      position: relative;
+
+      &::before {
+        background-color: rgba(255,255,255, 0.2);
+        content: "";
+        height: 3px;
+        left: -1rem;
+        position: absolute;
+        top: 30px;
+        width: 60%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 767.98px) {
+    flex-direction: column;
+
+    app-avatar {
+      margin-right: unset;
+    }
+
+    .user-info {
+      align-items: center;
+
+      h3 {
+        img {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.location {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map {
+  margin-top: 1rem;
+}
+
+span {
+  display: flex;
+  align-items: center;
+
+  .material-icons {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+}
+
+span + span {
+  margin-top: 0.5rem;
+}

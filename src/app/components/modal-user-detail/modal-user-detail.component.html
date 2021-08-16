@@ -1,0 +1,42 @@
+<div class="user-detail">
+  <app-avatar
+    [pictures]="user.picture"
+    [avatarAlt]="user.name.first + ' ' + user.name.last"
+    avatarSize="large"
+  ></app-avatar>
+
+  <div class="user-info">
+    <h3>
+      {{user.name.title}} {{ user.name.first }} {{user.name.last}}
+      <img height="20px"
+        src="assets/images/flags/{{user.location.country.replace(' ', '')}}.svg"
+        [alt]="user.location.country"
+      >
+    </h3>
+    <span><i class="material-icons">local_phone</i> {{ user.phone }}</span>
+    <span><i class="material-icons">phone_iphone</i> {{ user.cell }}</span>
+    <span><i class="material-icons">email</i> {{ user.email }}</span>
+    <span><i class="material-icons">cake</i> {{ user.dob.date | date: 'yyyy-MM-dd' }} - Age: {{user.dob.age}}</span>
+  </div>
+</div>
+<mat-divider></mat-divider>
+
+<div class="location" >
+  <span>
+    <i class="material-icons">my_location</i>
+    {{user.location.street.number}},
+    {{user.location.street.name}} -
+    {{user.location.city}} - {{user.location.state}} - {{user.location.country}}
+  </span>
+  <button mat-mini-fab
+    color="primary"
+    (click)="toggleMap()"
+    [matTooltip]="showMap ? 'Close map' : 'Open map'"
+  >
+    <i class="material-icons">location_on</i>
+  </button>
+</div>
+
+<div class="map" *ngIf="showMap">
+  <app-map [initials]="user.nat" [address]="streetStateCountry"></app-map>
+</div>
