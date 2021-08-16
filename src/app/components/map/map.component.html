@@ -1,0 +1,8 @@
+<app-loading *ngIf="isLoading" diameter="80" color="accent"></app-loading>
+
+<div *ngIf="!isLoading"
+  leaflet
+  class="map"
+  (leafletMapReady)="onMapReady($event)"
+  [leafletOptions]="mapOptions"
+></div>
