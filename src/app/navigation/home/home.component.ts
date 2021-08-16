@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnInit} from '@angular/core'
+import { FormBuilder } from '@angular/forms'
+import { MatDialog } from '@angular/material/dialog'
+import { ModalUserDetailComponent } from 'src/app/components/modal-user-detail/modal-user-detail.component'
 import {
   CountryEnums,
-  GenderEnums,
   RandomUserRequest,
   RandomUserResponse
 } from 'src/app/models/random-user.model'
@@ -14,31 +16,51 @@ import { RandomUserService } from 'src/app/services/random-user.service'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
+  isLoading: boolean
 
-  picture = {
-    "large": "https://randomuser.me/api/portraits/women/55.jpg",
-    "medium": "https://randomuser.me/api/portraits/med/women/55.jpg",
-    "thumbnail": "https://randomuser.me/api/portraits/thumb/women/55.jpg"
-  }
+  users: RandomUserResponse[]
+
+  countries = Object.entries(CountryEnums).map(([v, k]) => ({
+    initials: k,
+    name: v
+  }))
+
+  quantities = [ 10, 20, 50 ]
+
+  form = this.fb.group({
+    nat: [''],
+    results: [this.quantities[0]],
+    gender: ['']
+  })
 
   constructor(
-    private randomUserService: RandomUserService
+    private randomUserService: RandomUserService,
+    public fb: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
-    // this.getRandomUsers()
-  }
+  ngOnInit() { }
 
-  getRandomUsers() {
-    const obj: RandomUserRequest = {
-      gender: null,
-      nat: null,
-      results: 10,
-    }
+  getRandomUsers(): void {
+    this.isLoading = true
+    this.form.disable()
+
+    const obj: RandomUserRequest = { ...this.form.value }
 
     this.randomUserService.getUsers(obj).subscribe(
-      (success: RandomUserResponse[]) => console.log(success, JSON.stringify(success)),
+      (success: RandomUserResponse[]) => this.users = success,
       (err: HttpErrorResponse) => console.log(err),
+      () => {
+        this.isLoading = false
+        this.form.enable()
+      }
     )
+  }
+
+  openUserDetail(user: any): void {
+    this.dialog.open(ModalUserDetailComponent, {
+      width: '680px',
+      data: user
+    })
   }
 }

@@ -11,8 +11,8 @@ export enum CountryEnums {
   UnitedKingdom = 'GB',
   Ireland = 'IE',
   Iran = 'IR',
-  Norway = 'NO',
   Netherlands = 'NL',
+  Norway = 'NO',
   NewZealand= 'NZ',
   Turkey = 'TR',
   UnitedStates = 'US'
@@ -80,7 +80,7 @@ interface UserLogin {
 }
 
 interface UserDateAndAge {
-  date: Date
+  date: string
   age: number
 }
 
@@ -93,4 +93,11 @@ export interface UserPicture {
   large: string
   medium: string
   thumbnail: string
+}
+
+export interface CountryObject {
+  latitude: number
+  longitude: number
+  initials: string
+  name: string
 }

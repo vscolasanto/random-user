@@ -5,10 +5,9 @@ import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app.routing.module'
-import { AngularMaterialModule } from './angular-material.module'
 import { NavigationModule } from './navigation/navigation.module'
 
-import { RandomUserService } from './services/random-user.service'
+import { SharedModule } from './shared.module'
 
 @NgModule({
   declarations: [
@@ -19,10 +18,9 @@ import { RandomUserService } from './services/random-user.service'
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    AngularMaterialModule,
-    NavigationModule
+    SharedModule,
+    NavigationModule,
   ],
-  providers: [RandomUserService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

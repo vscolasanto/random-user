@@ -3,7 +3,8 @@ import { throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
 
 export abstract class BaseService {
-  protected urlRandomUser = environment.apiUrl
+  protected urlRandomUser = environment.urlRandomUser
+  protected urlSearchLatLng = environment.urlSearchLatLng
 
   protected headerJson() {
     return {

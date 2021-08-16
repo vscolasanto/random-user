@@ -1,7 +1,64 @@
 <div class="home">
-  <app-avatar
-    [pictures]="picture"
-    avatarAlt="teste"
-    avatarSize="large"
-  ></app-avatar>
+  <form action="" [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Countries</mat-label>
+      <mat-select formControlName="nat" multiple panelClass="country-select">
+        <mat-select-trigger>
+          {{form.get('nat')?.value ? form.get('nat')?.value[0] : ''}}
+          <span *ngIf="form.get('nat')?.value?.length > 1">
+            (+{{form.get('nat')?.value.length - 1}} {{form.get('nat')?.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let country of countries" [value]="country.initials">
+          <img src="assets/images/flags/{{country.name}}.svg" [alt]="country.name" height="16">
+          {{country.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Quantity</mat-label>
+      <mat-select formControlName="results">
+        <mat-option *ngFor="let quantity of quantities" [value]="quantity">
+          {{quantity}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="custom-radio-group">
+      <mat-radio-group formControlName="gender" aria-label="Select a gender">
+        <mat-radio-button value="">All genders</mat-radio-button>
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <button mat-flat-button
+      color="primary"
+      [disabled]="isLoading"
+      (click)="getRandomUsers()"
+    >
+      Generate
+    </button>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <app-loading *ngIf="isLoading" diameter="80" color="accent"></app-loading>
+
+  <div class="no-content" *ngIf="!isLoading && !users?.length">
+    <h1 class="title">Generate fake random people</h1>
+    <h3 class="description">
+      Fake results of people consuming the open sources apis
+      <a href="https://nominatim.org/" target="_blank">Nominatim</a> and
+      <a href="https://randomuser.me/" target="blank">Random User</a>.
+    </h3>
+  </div>
+
+  <div class="users" *ngIf="!isLoading && users?.length">
+    <app-user-card *ngFor="let user of users"
+      [user]="user"
+      (click)="openUserDetail(user)"
+    ></app-user-card>
+  </div>
 </div>
