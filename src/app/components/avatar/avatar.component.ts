@@ -8,19 +8,21 @@ import { UserPicture } from 'src/app/models/random-user.model'
 })
 export class AvatarComponent implements OnInit {
 
-  @Input() pictures!: UserPicture
-  @Input() avatarAlt!: string
-  @Input() avatarSize!: 'thumb' | 'medium' | 'large'
+  @Input() pictures: UserPicture
+  @Input() avatarAlt: string
+  @Input() avatarSize: 'thumb' | 'medium' | 'large'
 
-  avatarUrl!: string
+  avatarUrl: string
+  color: string;
 
   constructor() { }
 
   ngOnInit(): void {
     this.defineSize(this.pictures)
+    // this.color = this.borderColor();
   }
 
-  defineSize(pictures: UserPicture) {
+  defineSize(pictures: UserPicture): void {
     switch(this.avatarSize) {
       case 'thumb':
         this.avatarUrl = pictures.thumbnail
@@ -33,4 +35,14 @@ export class AvatarComponent implements OnInit {
         break
     }
   }
+
+  // borderColor(): string {
+  //   const color = `linear-gradient(0deg, #${this.generateColor()} 0%, #${this.generateColor()} 100%)`
+  //   console.log(color);
+  //   return color
+  // }
+
+  // generateColor(): string {
+  //   return Math.floor(Math.random() * 16777215).toString(16)
+  // }
 }
