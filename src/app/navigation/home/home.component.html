@@ -35,7 +35,7 @@
 
     <button mat-flat-button
       color="primary"
-      [disabled]="isLoading"
+      [disabled]="isLoading$ | async"
       (click)="getRandomUsers()"
     >
       Generate
@@ -44,9 +44,9 @@
 
   <mat-divider></mat-divider>
 
-  <app-loading *ngIf="isLoading" diameter="80" color="accent"></app-loading>
+  <app-loading *ngIf="isLoading$ | async" diameter="80" color="accent"></app-loading>
 
-  <div class="no-content" *ngIf="!isLoading && !users?.length">
+  <div class="no-content" *ngIf="!(isLoading$ | async) &&  (users$ | async)?.length">
     <h1 class="title">Generate fake random people</h1>
     <h3 class="description">
       Fake results of people consuming the open sources apis
@@ -55,10 +55,15 @@
     </h3>
   </div>
 
-  <div class="users" *ngIf="!isLoading && users?.length">
-    <app-user-card *ngFor="let user of users"
+  <div class="users" *ngIf="!(isLoading$ | async) && (users$ | async)?.length">
+    <app-user-card *ngFor="let user of (users$ | async)"
       [user]="user"
       (click)="openUserDetail(user)"
     ></app-user-card>
+  </div>
+
+  <div *ngIf="error$ | async as error" class="error">
+    <span class="error--title">Erro</span>
+    <pre>{{error}}</pre>
   </div>
 </div>

@@ -20,6 +20,7 @@ export class RandomUserService extends BaseService {
   }
 
   getUsers(obj: RandomUserRequest): Observable<RandomUserResponse[]> {
+    console.log('service')
     return this.http
       .get<RandomUserResponse[]>(
         `${this.urlRandomUser}/?${filter(obj)}`,

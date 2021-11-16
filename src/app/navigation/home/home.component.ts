@@ -1,14 +1,20 @@
-import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnInit} from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
 import { ModalUserDetailComponent } from 'src/app/components/modal-user-detail/modal-user-detail.component'
 import {
   CountryEnums,
   RandomUserRequest,
   RandomUserResponse
 } from 'src/app/models/random-user.model'
-import { RandomUserService } from 'src/app/services/random-user.service'
+import { getError, getUsers } from 'src/app/state/users'
+import { State } from 'src/app/state/app.state'
+
+import { UserPageActions } from '../../state/users/actions';
+import { SharedActions } from '../../state/shared/actions';
+import { getLoading } from 'src/app/state/shared'
 
 @Component({
   selector: 'app-home',
@@ -16,9 +22,10 @@ import { RandomUserService } from 'src/app/services/random-user.service'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
-  isLoading: boolean
+  isLoading$: Observable<boolean>;
 
-  users: RandomUserResponse[]
+  users$: Observable<RandomUserResponse[] | null>
+  error$: Observable<string>
 
   countries = Object.entries(CountryEnums).map(([v, k]) => ({
     initials: k,
@@ -34,33 +41,26 @@ export class HomeComponent implements OnInit{
   })
 
   constructor(
-    private randomUserService: RandomUserService,
+    private store: Store<State>,
     public fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) { }
 
-  ngOnInit() { }
-
-  getRandomUsers(): void {
-    this.isLoading = true
-    this.form.disable()
-
-    const obj: RandomUserRequest = { ...this.form.value }
-
-    this.randomUserService.getUsers(obj).subscribe(
-      (success: RandomUserResponse[]) => this.users = success,
-      (err: HttpErrorResponse) => console.log(err),
-      () => {
-        this.isLoading = false
-        this.form.enable()
-      }
-    )
+  ngOnInit() {
+    this.isLoading$ = this.store.select(getLoading);
+    this.users$ = this.store.select(getUsers);
+    this.error$ = this.store.select(getError);
   }
 
-  openUserDetail(user: any): void {
-    this.dialog.open(ModalUserDetailComponent, {
-      width: '680px',
-      data: user
-    })
+  getRandomUsers(): void {
+    const obj: RandomUserRequest = { ...this.form.value }
+
+    this.store.dispatch(SharedActions.setLoading({ status: true }));
+    this.store.dispatch(UserPageActions.loadUsers({ request: obj }));
+  }
+
+  openUserDetail(user: RandomUserResponse): void {
+    this.store.dispatch(UserPageActions.setUserSelected({ userSelected: user }));
+    this.dialog.open(ModalUserDetailComponent, { width: '680px' });
   }
 }
